@@ -1,0 +1,161 @@
+% --- Ally Info ---
+\def \name{Celestial Centipede, Giant}
+\def \racialtype{vermin}
+\def \racialsize{Medium \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{40}
+\def \baseclimbspeed{40}
+
+\def \allyroles{Debuffer}
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{9}
+\def \basedexterity{15}
+\def \baseconstitution{12}
+\def \baseintelligence{---}
+\def \basewisdom{10}
+\def \basecharisma{2}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{4}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{4}{0}
+\def \intelligence{---}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Vermin ---
+%	d8
+%	3/4 BAB
+%	Good Fortitude
+%	Darkvision 60 ft.
+%	Immune to mind-affecting effects
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	No intelligence score.
+
+\def \hitdice{1}
+\FPeval{\baseattack}{trunc(\hitdice * 0.75, 0)}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(\hitdice / 3, 0)}
+\FPeval{\basewill}{trunc(\hitdice / 3, 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{2}
+\def \sizeacmodifier{0}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{0}
+\def \sizecmdmodifier{0}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+
+\def \sizeattackmodifier{0}
+
+\attack{\bite}{\baseattack}{\dexteritymod}{0}{\sizeattackmodifier}{0}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \racialclimbbonus{8}
+\def \racialperceptionbonus{4}
+\def \racialspeedjumpbonus{4}
+\def \racialstealthbonus{8}
+\def \sizestealthbonus{0}
+
+
+% --- *Vermin ---
+%	2 + [Intelligence Modifier]
+%	* Most vermin are mindless and gain no skill points or feats.
+%
+%	Total Skill Points - 1
+
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{0}{\dexteritymod}{0}{\racialclimbbonus}{0}{0}{0}{0}
+\skill{\escapeartistskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{0}{\wisdommod}{0}{\racialperceptionbonus}{0}{0}{0}{0}
+\skill{\stealthskill}{0}{\dexteritymod}{0}{\racialstealthbonus}{0}{0}{\sizestealthbonus}{0}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+
+\skill{\jumpskill}{0}{\dexteritymod}{0}{\racialspeedjumpbonus}{0}{0}{0}{0}
+
+
+
+% --- Feats ---
+\def \feats{Weapon Finesse, Weapon Proficiency (Natural)}
+
+
+
+% --- Miscellaneous ---
+\def \initiative{\dexteritymod}
+\def \senses{darkvision 60 ft.; Perception +\perceptionskill}
+
+\def \specialattacks{smite evil 1/day (+0 to hit, +\hitdice \hspace{1pt} to damage)}
+
+% --- *Hit Points ---
+\FPeval{\verminhitpoints}{trunc(4.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\verminhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnminusonenumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+\characteralignment \racialsize \racialtype \\
+\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
+\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\
+\textbf{SR} 5; \textbf{Resist} acid 5, cold 5, electricity 5 \\
+\textbf{Immune} mind-affecting effects \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft., climb \baseclimbspeed \hspace{1pt} ft.; \textbf{Senses} \senses \\
+\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Melee} bite +\bite \hspace{1pt} (1d6+\enhancedstat{\strengthmod} \hspace{1pt} plus poison) \\
+\textbf{Special Attacks} \specialattacks \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{+\allycmb}; \textbf{CMD} \enhancedstat{\allycmd} \hspace{1pt} (can't be tripped) \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (+\jumpskill \hspace{1pt} jumping), Climb +\climbskill, Escape Artist +\escapeartistskill, \\ Intimidate \intimidateskill, Stealth +\stealthskill, Survival +\survivalskill, Swim +\swimskill \\
+
+\textbf{Poison (Ex)} Bite---injury; \textit{save} Fort DC \enhancedstat{15}; \textit{frequency} 1/round for 6 rounds; \textit{effect} 1d3 Dex damage; \textit{cure} 1 save. The save DC is Constitution-based and includes a +2 racial bonus. \\
+
+\newpage

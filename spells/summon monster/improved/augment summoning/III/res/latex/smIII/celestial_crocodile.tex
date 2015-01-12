@@ -1,0 +1,180 @@
+% --- Ally Info ---
+\def \name{Celestial Crocodile}
+\def \racialtype{animal}
+\def \racialsize{Large \hspace{1pt}}
+\def \racialspace{10 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{20}
+\def \baseswimspeed{30}
+
+\def \allyroles{Grappler, Sensor, Smiter, Striker, Tank, Tripper}
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{19}
+\def \basedexterity{12}
+\def \baseconstitution{17}
+\def \baseintelligence{1}
+\def \basewisdom{12}
+\def \basecharisma{2}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{4}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{4}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Animal ---
+%	d8
+%	3/4 BAB
+%	Good Fortitude and Reflex saves
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	Intelligence score of 1 or 2
+
+\def \hitdice{3}
+\FPeval{\baseattack}{trunc(\hitdice * 0.75, 0)}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(\hitdice / 3, 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{4}
+\def \sizeacmodifier{-1}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{1}
+\def \sizecmdmodifier{1}
+
+\def \grapplebonus{4} 
+\def \quadrupedcmdtripbonus{4}
+\FPeval{\totalcmbgrapplebonus}{clip(\sizecmbmodifier + \grapplebonus)}
+\FPeval{\totalcmdtripbonus}{clip(\sizecmdmodifier + \quadrupedcmdtripbonus)}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverbonus{\allygrapplecmb}{\baseattack}{\strengthmod}{\totalcmbgrapplebonus}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+\combatmaneuverdefense{\allytripcmd}{\baseattack}{\strengthmod}{\dexteritymod}{\totalcmdtripbonus}
+
+\def \sizeattackmodifier{-1}
+\def \secondaryattackpenalty{-5}
+\FPeval{\strengthnhalf}{trunc(\strengthmod * 1.5, 0)}
+\FPeval{\strengthhalf}{trunc(\strengthmod * 0.5, 0)}
+
+\attack{\bite}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+\attack{\tailslap}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{\secondaryattackpenalty}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \featperceptionbonus{3}
+\def \featstealthbonus{3}
+\def \racialstealthbonus{8}
+\def \racialswimbonus{8}
+\def \sizestealthmodifier{-4}
+
+% --- *Animal ---
+%	2 + [Intelligence Modifier]
+%	Class Skills -
+%		Acrobatics, Climb, Fly, Perception, Stealth, and Swim
+%
+%	Total Skill Points - 3
+
+\def \animalperceptionranks{1}
+\def \animalstealthranks{2}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{0}{0}{0}{0}{0}{0}{0}{0}
+\skill{\escapeartistskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\animalperceptionranks}{\wisdommod}{\classskillbonus}{0}{\featperceptionbonus}{0}{0}{0}
+\skill{\stealthskill}{\animalstealthranks}{\dexteritymod}{\classskillbonus}{0}{\featstealthbonus}{0}{\sizestealthmodifier}{0}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{0}{\racialswimbonus}{0}{0}{0}
+
+\skill{\waterstealthskill}{\animalstealthranks}{\dexteritymod}{\classskillbonus}{\racialstealthbonus}{\featstealthbonus}{0}{\sizestealthmodifier}{0}
+
+
+
+% --- Feats ---
+\def \feats{Skill Focus (Perception, Stealth), Weapon Proficiency (Natural)}
+
+
+
+% --- Miscellaneous ---
+\def \initiative{\dexteritymod}
+\def \senses{darkvision 60 ft., low-light vision; Perception +\perceptionskill}
+
+\def \specialattacks{death roll (1d8+\enhancedstat{\strengthnhalf} \hspace{1pt} plus trip), \\ smite evil 1/day (+0 to attack, +\hitdice \hspace{1pt} to damage)}
+\def \specialqualities{hold breath}
+
+% --- *Hit Points ---
+\FPeval{\animalhitpoints}{trunc(4.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\animalhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnnumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+\characteralignment \racialsize \racialtype \\
+\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
+\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\
+\textbf{SR} 7; \textbf{Resist} acid 5, cold 5, electricity 5 \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft., swim \baseswimspeed \hspace{1pt} ft.; sprint \\ 
+\textbf{Senses} \senses \\
+\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Space} \racialspace; \textbf{Reach} \racialreach \\ 
+\textbf{Melee} bite \enhancedstat{+\bite} \hspace{1pt} (1d6+\enhancedstat{\strengthmod} \hspace{1pt} plus grab) and tail slap \enhancedstat{+\tailslap} \hspace{1pt} (1d12+\enhancedstat{\strengthhalf}) \\
+\textbf{Special Attacks} \specialattacks \\
+\textbf{Special Qualities} \specialqualities \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{+\allycmb} \hspace{1pt} (\enhancedstat{+\allygrapplecmb} \hspace{1pt} grapple); \textbf{CMD} \enhancedstat{\allycmd} \hspace{1pt} (\enhancedstat{\allytripcmd} \hspace{1pt} vs. trip) \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill, Climb \enhancedstat{+\climbskill}, Escape Artist +\escapeartistskill, \\ Intimidate \intimidateskill, Stealth +\stealthskill \hspace{1pt} (+\waterstealthskill \hspace{1pt} in water), Survival +\survivalskill, Swim \enhancedstat{+\swimskill} \\
+
+\textbf{Death Roll (Ex)} When grappling a foe of its size or smaller, a crocodile can perform a death roll upon making a successful grapple check. As it clings to its foe, it tucks in its legs and rolls rapidly, twisting and wrenching its victim. The crocodile inflicts its bite damage and knocks the creature prone. If successful, the crocodile maintains its grapple. \\
+
+\textbf{Hold Breath (Ex)} A crocodile can hold its breath for a number of rounds equal to 4 times its Constitution score before it risks drowning. \\
+
+\textbf{Sprint (Ex)} Once per minute a crocodile may sprint, increasing its land speed to 40 feet for 1 round. \\
+
+\newpage
