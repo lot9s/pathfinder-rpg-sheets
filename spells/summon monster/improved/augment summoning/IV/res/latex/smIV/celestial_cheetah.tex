@@ -1,0 +1,176 @@
+% --- Ally Info ---
+\def \name{Celestial Cat, Cheetah}
+\def \racialtype{animal}
+\def \racialsize{Medium \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{50}
+
+\def \allyroles{Sensor, Smiter, Striker, Tripper}
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{17}
+\def \basedexterity{19}
+\def \baseconstitution{15}
+\def \baseintelligence{2}
+\def \basewisdom{12}
+\def \basecharisma{6}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{4}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{4}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Animal ---
+%	d8
+%	3/4 BAB
+%	Good Fortitude and Reflex saves
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	Intelligence score of 1 or 2
+
+\def \hitdice{3}
+\FPeval{\baseattack}{trunc(\hitdice * 0.75, 0)}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(\hitdice / 3, 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{1}
+\def \sizeacmodifier{0}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{0}
+\def \sizecmdmodifier{-0}
+\def \quadrupedcmdtripbonus{4}
+\FPeval{\totalcmdtripbonus}{clip(\sizecmdmodifier + \quadrupedcmdtripbonus)}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+\combatmaneuverdefense{\allytripcmd}{\baseattack}{\strengthmod}{\dexteritymod}{\totalcmdtripbonus}
+
+\def \sizeattackmodifier{0}
+
+\attack{\bite}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+\attack{\claw}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \featperceptionbonus{3}
+\def \racialspeedjumpbonus{8}
+\def \racialtallgrassstealthbonus{4}
+\def \sizestealthbonus{0}
+
+% --- *Animal ---
+%	2 + [Intelligence Modifier]
+%	Class Skills -
+%		Acrobatics, Climb, Fly, Perception, Stealth, and Swim
+%
+%	Total Skill Points - 3
+
+\def \animalacrobaticsranks{1}
+\def \animalperceptionranks{1}
+\def \animalstealthranks{1}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{\animalacrobaticsranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\climbskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+\skill{\escapeartistskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\animalperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\stealthskill}{\animalstealthranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{\sizestealthbonus}{0}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+
+\skill{\jumpskill}{\animalacrobaticsranks}{\dexteritymod}{\classskillbonus}{\racialspeedjumpbonus}{0}{0}{0}{0}
+\skill{\tallgrassstealthskill}{\animalstealthranks}{\dexteritymod}{\classskillbonus}{\racialtallgrassstealthbonus}{0}{0}{\sizestealthbonus}{0}
+
+
+
+% --- Feats ---
+\def \feats{Improved Initiative, Weapon Finesse, Weapon Proficiency (Natural)}
+
+
+
+% --- Miscellaneous ---
+\def \featinitiativebonus{4}
+\FPeval{\initiative}{clip(\dexteritymod + \featinitiativebonus)}
+
+\def \senses{darkvision 60 ft., low-light vision, scent; Perception +\perceptionskill}
+
+\def \specialattacks{smite evil 1/day (+0 to attack, +\hitdice \hspace{1pt} to damage)}
+
+% --- *Hit Points ---
+\FPeval{\animalhitpoints}{trunc(4.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\animalhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnminusonenumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+\characteralignment \racialsize \racialtype \\
+\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
+\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\
+\textbf{SR} 7; \textbf{Resist} acid 5, cold 5, electricity 5 \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft., sprint \\ 
+\textbf{Senses} \senses \\
+\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Melee} bite \enhancedstat{+\bite} \hspace{1pt} (1d6+\enhancedstat{\strengthmod} \hspace{1pt} plus trip), 2 claws \enhancedstat{+\claw} \hspace{1pt} (1d3+\enhancedstat{\strengthmod}) \\
+\textbf{Special Attacks} \specialattacks \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{+\allycmb}; \textbf{CMD} \enhancedstat{\allycmd} \hspace{1pt} (\enhancedstat{\allytripcmd} \hspace{1pt} vs. trip) \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (+\jumpskill \hspace{1pt} jumping), Climb \enhancedstat{+\climbskill}, Escape Artist +\escapeartistskill, \\ Intimidate \intimidateskill, Stealth +\stealthskill \hspace{1pt} (+\tallgrassstealthskill \hspace{1pt} in tall grass), Survival +\survivalskill, Swim \enhancedstat{+\swimskill} \\
+
+\textbf{Scent (Ex)} This special quality allows a creature to detect approaching enemies, sniff out hidden foes, and track by sense of smell. Creatures with the scent ability can identify familiar odors just as humans do familiar sights. \\
+
+The creature can detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if downwind, it drops to 15 feet. Strong scents, such as smoke or rotting garbage, can be detected at twice the ranges noted above. Overpowering scents, such as skunk musk or troglodyte stench, can be detected at triple normal range. \\
+
+When a creature detects a scent, the exact location of the source is not revealed—only its presence somewhere within range. The creature can take a move action to note the direction of the scent. When the creature is within 5 feet of the source, it pinpoints the source's location. \\
+
+A creature with the scent ability can follow tracks by smell, making a Wisdom (or Survival) check to find or follow a track. The typical DC for a fresh trail is 10 (no matter what kind of surface holds the scent). This DC increases or decreases depending on how strong the quarry's odor is, the number of creatures, and the age of the trail. For each hour that the trail is cold, the DC increases by 2. The ability otherwise follows the rules for the Survival skill. Creatures tracking by scent ignore the effects of surface conditions and poor visibility. \\
+
+\textbf{Sprint (Ex)} Once per hour, a cheetah can move at 10 times its normal speed (500 feet) when it makes a charge. \\
+
+\newpage
