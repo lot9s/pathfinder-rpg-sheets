@@ -1,30 +1,30 @@
 % --- Ally Info ---
-\def \name{Grig}
+\def \name{Sprite}
 \def \racialtype{fey}
-\def \racialsize{Tiny \hspace{1pt}}
-\def \racialspace{2-1/2 ft.}
+\def \racialsize{Diminutive \hspace{1pt}}
+\def \racialspace{1 ft.}
 \def \racialreach{0 ft.}
-\def \baselandspeed{30}
-\def \baseflyspeed{40}
+\def \baselandspeed{15}
+\def \baseflyspeed{60}
 
-\def \allyroles{Caster, Ranger}
+\def \allyroles{Buffer, Caster, Debuffer, Ranger, Sensor}
 
 
 
 % --- Ability Scores ---
 
 % --- *Base Ability Scores ---
-\def \basestrength{5}
-\def \basedexterity{18}
-\def \baseconstitution{13}
-\def \baseintelligence{10}
-\def \basewisdom{13}
-\def \basecharisma{14}
+\def \basestrength{3}
+\def \basedexterity{17}
+\def \baseconstitution{10}
+\def \baseintelligence{6}
+\def \basewisdom{11}
+\def \basecharisma{10}
 
 % --- *Final Ability Scores ---
-\ability{\strength}{\basestrength}{0}{4}{0}{0}{0}
+\ability{\strength}{\basestrength}{0}{0}{0}{0}{0}
 \ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
-\ability{\constitution}{\baseconstitution}{0}{4}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{0}{0}
 \ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
 \ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
 \ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
@@ -64,11 +64,10 @@
 
 
 % --- Defense ---
-\def \dodgeacbonus{1}
-\def \sizeacmodifier{2}
+\def \sizeacmodifier{4}
 
-\armorclass{\ac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{\dodgeacbonus}
-\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{\dodgeacbonus}
+\armorclass{\ac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
 \armorclass{\flatfootedac}{0}{0}{0}{0}{\sizeacmodifier}{0}
 
 \savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
@@ -78,27 +77,27 @@
 
 
 % --- Offense ---
-\def \sizecmbmodifier{-2}
-\def \sizecmdmodifier{-2}
-\def \tripcmdbonus{6}
-\FPeval{\totaltripcmdbonus}{clip(\sizecmdmodifier + \tripcmdbonus)}
+\def \sizecmbmodifier{-4}
+\def \sizecmdmodifier{-4}
 
 \combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
 \combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
-\combatmaneuverdefense{\allytripcmd}{\baseattack}{\strengthmod}{\dexteritymod}{\totaltripcmdbonus}
 
-\def \sizeattackmodifier{2}
+\def \sizeattackmodifier{4}
 
 \attack{\shortsword}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
-\attack{\longbow}{\baseattack}{\dexteritymod}{0}{\sizeattackmodifier}{0}
+\attack{\shortbow}{\baseattack}{\dexteritymod}{0}{\sizeattackmodifier}{0}
 
 
 
 % --- Skills ---
 \def \classskillbonus{3}
-\def \racialjumpbonus{4}
-\def \sizeflybonus{4}
-\def \sizestealthbonus{8}
+\def \featperceptionbonus{2}
+\def \featsensemotivebonus{2}
+\def \racialflybonus{8}
+\def \racialjumpbonus{-8}
+\def \sizeflybonus{6}
+\def \sizestealthbonus{12}
 
 % --- *Fey ---
 %	6 + [Intelligence Modifier]
@@ -107,17 +106,15 @@
 %		Knowledge (geography), Knowledge (local), Knowledge (nature), Perception, Perform, 
 %		Sense Motive, Sleight of Hand, Stealth, Swim, and Use Magic Device
 %
-%	Total Skill Points - 6
+%	Total Skill Points - 4
 
-\def \feyacrobaticsranks{1}
 \def \feyescapeartistranks{1}
 \def \feyflyranks{1}
 \def \feyperceptionranks{1}
-\def \feyperformstringinstrumentranks{1}
 \def \feystealthranks{1}
 
 % --- Untrained Skills ---
-\skill{\acrobaticsskill}{\feyacrobaticsranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\acrobaticsskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
 \skill{\appraiseskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
 \skill{\bluffskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 \skill{\climbskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
@@ -145,26 +142,26 @@
 \skill{\diplomacyskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 \skill{\disguiseskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 \skill{\escapeartistskill}{\feyescapeartistranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
-\skill{\flyskill}{\feyflyranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{\sizeflybonus}{0}
+\skill{\flyskill}{\feyflyranks}{\dexteritymod}{\classskillbonus}{0}{\racialflybonus}{0}{\sizeflybonus}{0}
 \skill{\healskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
 \skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
-\skill{\perceptionskill}{\feyperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\feyperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{\featperceptionbonus}
 %\skill{\performactskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performcomedyskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performdanceskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performkeyboardinstrumentskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performoratoryskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performpercussioninstrumentskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
-\skill{\performstringinstrumentskill}{\feyperformstringinstrumentranks}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performstringinstrumentskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performwindinstrumentskill}{\0}{\charismamod}{0}{0}{0}{0}{0}{0}
 %\skill{\performsingskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
 \skill{\rideskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
-\skill{\sensemotiveskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\sensemotiveskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{\featsensemotivebonus}
 \skill{\stealthskill}{\feystealthranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{\sizestealthbonus}{0}
 \skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
 \skill{\swimskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
 
-\skill{\jumpskill}{\feyacrobaticsranks}{\dexteritymod}{\classskillbonus}{\racialjumpbonus}{0}{0}{0}{0}
+\skill{\jumpskill}{0}{\dexteritymod}{0}{\racialjumpbonus}{0}{0}{0}{0}
 
 % --- Trained Skills
 %\skill{\disabledeviceskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{\acpenalty}
@@ -217,13 +214,15 @@
 
 
 % --- Feats ---
-\def \feats{Dodge, Weapon Proficiency (Natural, Simple)}
+\def \feats{Alertness, Weapon Proficiency (Natural, Simple)}
 
 
 
 % --- Miscellaneous ---
 \def \initiative{\dexteritymod}
-\def \senses{low-light vision; Perception +\perceptionskill}
+\def \senses{\textit{detect evil}, \textit{detect good}, low-light vision; Perception +\perceptionskill}
+
+\def \specialqualities{luminous}
 
 \def \allylanguages{Common, Sylvan}
 
@@ -239,23 +238,26 @@
 \line(1,0){345} \\
 \levelnnumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
 
-NG \racialsize \racialtype \\
-\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
-\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\
-\textbf{DR} 5/cold iron; \textbf{SR} 16 \\
+CN \racialsize \racialtype \\
+\textbf{hp} \hitpoints \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
+\textbf{Fort} +\fortitude \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\
+\textbf{DR} 2/cold iron \\
 \textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft., fly \baseflyspeed \hspace{1pt} ft. (average) \\ 
 \textbf{Senses} \senses \\
-\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Str} \strength \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \constitution \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
 \textbf{Space} \racialspace; \textbf{Reach} \racialreach \\
-\textbf{Melee} shortsword \enhancedstat{+\shortsword} \hspace{1pt} (1d3\enhancedstat{\strengthmod}/19-20) \\
-\textbf{Ranged} longbow +\longbow \hspace{1pt} (1d4\enhancedstat{\strengthmod}/x3) \\
-%\textbf{Special Attacks} \specialattacks \\
-%\textbf{Special Qualities} \\
-\textbf{Spell-Like Abilities} (CL 9th; concentration +11) \\
-3/day---\textit{disguise self, entangle} (DC 13), \textit{invisibility} (self only), \\ \textit{pyrotechnics} (DC 14) \\
-\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{\allycmb}; \textbf{CMD} \enhancedstat{\allycmd} \hspace{1pt} (\enhancedstat{\allytripcmd} \hspace{1pt} vs. trip) \\ 
+\textbf{Melee} shortsword +\shortsword \hspace{1pt} (1d2\strengthmod/19-20) \\
+\textbf{Ranged} shortbow +\shortbow \hspace{1pt} (1d2\strengthmod/x3) \\
+\textbf{Special Qualities} \specialqualities \\
+\textbf{Spell-Like Abilities} (CL 5th; concentration +5) \\
+Constant---\textit{detect evil, detect good} \\
+At Will---\textit{dancing lights, daze} (DC 10) \\
+1/day---\textit{color spray} (DC 11) \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \allycmb; \textbf{CMD} \allycmd \\ 
 \textbf{Feats} \feats \\
-\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (+\jumpskill \hspace{1pt} jumping), Appraise +\appraiseskill, Bluff +\bluffskill, Climb \enhancedstat{\climbskill}, \\ Diplomacy +\diplomacyskill, Disguise +\disguiseskill, Escape Artist +\escapeartistskill, Fly +\flyskill, Heal +\healskill, \\ Intimidate +\intimidateskill, Perform (string instrument) +\performstringinstrumentskill, Ride +\rideskill, Sense Motive +\sensemotiveskill, Stealth +\stealthskill, Survival +\survivalskill, Swim \enhancedstat{\swimskill} \\
+\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (+\jumpskill \hspace{1pt} jumping), Appraise +\appraiseskill, Bluff +\bluffskill, Climb \climbskill, \\ Diplomacy +\diplomacyskill, Disguise +\disguiseskill, Escape Artist +\escapeartistskill, Fly +\flyskill, Heal +\healskill, \\ Intimidate +\intimidateskill, Ride +\rideskill, Sense Motive +\sensemotiveskill, Stealth +\stealthskill, Survival +\survivalskill, Swim \swimskill \\
 \textbf{Languages} \allylanguages \\
+
+\textbf{Luminous (Su):} A sprite naturally sheds light equal to that provided by a torch. A sprite can control the color and intensity of the light as a swift action, reducing it to the dimness of a candle or even extinguishing its luminosity entirely if it wishes. \\
 
 \newpage
