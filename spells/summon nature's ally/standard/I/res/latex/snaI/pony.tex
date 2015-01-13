@@ -1,0 +1,156 @@
+% --- Ally Info ---
+\def \name{Horse, Pony}
+\def \racialtype{animal}
+\def \racialsize{Medium \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{40}
+
+\def \allyroles{Tank}
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{13}
+\def \basedexterity{13}
+\def \baseconstitution{14}
+\def \baseintelligence{2}
+\def \basewisdom{11}
+\def \basecharisma{4}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{0}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{0}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Animal ---
+%	d8
+%	3/4 BAB
+%	Good Fortitude and Reflex saves
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	Intelligence score of 1 or 2
+
+\def \hitdice{2}
+\FPeval{\baseattack}{trunc(\hitdice * 0.75, 0)}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(\hitdice / 4, 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{0}
+\def \sizeacmodifier{0}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{0}
+\def \sizecmdmodifier{0}
+\def \quadrupedcmdtripbonus{4}
+\FPeval{\totalcmdtripbonus}{clip(\sizecmdmodifier + \quadrupedcmdtripbonus)}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+\combatmaneuverdefense{\allytripcmd}{\baseattack}{\strengthmod}{\dexteritymod}{\totalcmdtripbonus}
+
+\def \sizeattackmodifier{0}
+
+% As the generic pony is not trained for war, its hooves are considered secondary weapons.
+\attack{\hoof}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{-5}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \racialspeedjumpbonus{4}
+
+% --- *Animal ---
+%	2 + [Intelligence Modifier]
+%	Class Skills -
+%		Acrobatics, Climb, Fly, Perception, Stealth, and Swim
+%
+%	Total Skill Points - 1
+
+\def \animalperceptionranks{2}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+\skill{\escapeartistskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\animalperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\stealthskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+
+\skill{\jumpskill}{0}{\dexteritymod}{0}{0}{0}{0}{\racialspeedjumpbonus}{0}
+
+
+
+% --- Feats ---
+\def \feats{Endurance, Run, Weapon Proficiency (Natural)}
+
+
+
+% --- Miscellaneous ---
+\def \initiative{\dexteritymod}
+\def \senses{low-light vision, scent; Perception +\perceptionskill}
+
+% --- *Hit Points ---
+\FPeval{\animalhitpoints}{trunc(4.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\animalhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnnumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+\characteralignment \racialsize \racialtype \\
+\textbf{hp} \hitpoints \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac; \\ 
+\textbf{Fort} +\fortitude \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt}; \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft.; \textbf{Senses} \senses \\
+\textbf{Str} \strength \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \constitution \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Melee} 2 hooves \hoof \hspace{1pt} (1d3) \\
+\textbf{Special Qualities} docile \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} +\allycmb; \textbf{CMD} \allycmd \hspace{1pt} (\allytripcmd \hspace{1pt} vs. trip) \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (+\jumpskill \hspace{1pt} jumping), Climb +\climbskill, Escape Artist +\escapeartistskill, Intimidate \intimidateskill, Stealth +\stealthskill, Survival +\survivalskill, Swim +\swimskill \\
+
+\textbf{Docile (Ex)} Unless specifically trained for combat (see the Handle Animal skill on page 97 of the Pathfinder RPG Core Rulebook), a horse’s hooves are treated as secondary attacks. \\
+
+\newpage

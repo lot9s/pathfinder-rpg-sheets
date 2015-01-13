@@ -1,0 +1,184 @@
+% --- Ally Info ---
+\def \name{Mite}
+\def \racialtype{fey}
+\def \racialsize{Small \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{20}
+\def \baseclimbspeed{20}
+
+\def \allyroles{Caster, Debuffer, Ranger}
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{8}
+\def \basedexterity{13}
+\def \baseconstitution{11}
+\def \baseintelligence{8}
+\def \basewisdom{13}
+\def \basecharisma{8}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{0}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{0}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Fey ---
+%	d6
+%	1/2 BAB
+%	Good Reflex and Will saves
+%	Low-light Vision
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency (Simple*)
+%		* Proficient with any weapon mentioned in its entry
+%	Weapon Proficiency (*)
+%		* Proficient with any armor mentioned in its entry and all lighter types.
+%		* Proficient with shields if they are proficient with any form of armor.
+
+\def \hitdice{1}
+\FPeval{\baseattack}{trunc(\hitdice * 0.5, 0)}
+
+\FPeval{\basefortitude}{trunc(\hitdice / 4, 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(2 + (\hitdice / 2), 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{0}
+\def \sizeacmodifier{1}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{-1}
+\def \sizecmdmodifier{-1}
+\FPeval{\totalcmdtripbonus}{clip(\sizecmdmodifier + \quadrupedcmdtripbonus)}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+
+\def \sizeattackmodifier{1}
+
+\attack{\dagger}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+\attack{\dart}{\baseattack}{\dexteritymod}{0}{\sizeattackmodifier}{0}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \racialclimbbonus{8}
+\def \racialjumppenalty{-4}
+\def \racialsleightofhandbonus{4}
+\def \racialstealthbonus{4}
+\def \sizestealthbonus{4}
+
+% --- *Fey ---
+%	6 + [Intelligence Modifier]
+%	Class Skills -
+%		Acrobatics, Bluff, Climb, Craft, Diplomacy, Disguise, Escape Artist, Fly, 
+%		Knowledge (geography), Knowledge (local), Knowledge (nature), Perception, Perform, 
+%		Sense Motive, Sleight of Hand, Stealth, Swim, and Use Magic Device
+%
+%	Total Skill Points - 5
+
+\def \feyhandleanimalranks{1}
+\def \feyperceptionranks{1}
+\def \feyrideranks{1}
+\def \feysleightofhandranks{1}
+\def \feystealthranks{1}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{0}{\strengthmod}{0}{\racialclimbbonus}{0}{0}{0}{0}
+\skill{\escapeartistskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\feyperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\stealthskill}{\feystealthranks}{\dexteritymod}{\classskillbonus}{\racialstealthbonus}{0}{0}{\sizestealthbonus}{0}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+
+\skill{\jumpskill}{0}{\dexteritymod}{0}{0}{0}{0}{\racialjumppenalty}{0}
+
+% --- Trained Skills ---
+\skill{\handleanimalskill}{\feyhandleanimalranks}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\rideskill}{\feyrideranks}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\sleightofhandskill}{\feysleightofhandranks}{\dexteritymod}{\classskillbonus}{\racialsleightofhandbonus}{0}{0}{0}{0}
+
+
+
+% --- Feats ---
+\def \feats{Point Blank Shot, Weapon Proficiency (Natural, Simple)}
+
+
+
+% --- Miscellaneous ---
+\def \initiative{\dexteritymod}
+\def \senses{darkvision 120 ft., low-light vision, scent; Perception +\perceptionskill}
+
+\def \allylanguages{Undercommon}
+
+% --- *Hit Points ---
+\FPeval{\animalhitpoints}{trunc(3.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\animalhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnnumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+\characteralignment \racialsize \racialtype \\
+\textbf{hp} \hitpoints \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac; \\ 
+\textbf{Fort} +\fortitude \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} \will \hspace{1pt}; \\
+\textbf{DR} 2/cold iron \\
+\textbf{Weaknesses} light sensitivity \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft., climb \baseclimbspeed \hspace{1pt} ft. \\ 
+\textbf{Senses} \senses \\
+\textbf{Str} \strength \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \constitution \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Melee} dagger +\dagger \hspace{1pt} (1d3\strengthmod/19-20) \\
+\textbf{Ranged} dart +\dart \hspace{1pt} (1d3\strengthmod) \\
+\textbf{Special Attacks} hatred \\
+\textbf{Special Qualities} vermin empathy +4 \\
+\textbf{Spell-Like Abilities} (CL 1st) \\
+At Will---\emph{prestidigitation} \\
+1/day---\emph{doom} (DC 10) \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \allycmb; \textbf{CMD} \allycmd \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (\jumpskill \hspace{1pt} jumping), Climb +\climbskill, Escape Artist +\escapeartistskill, \\ Handle Animal +\handleanimalskill, Intimidate \intimidateskill, Ride +\rideskill, Sleight of Hand +\sleightofhandskill, Stealth +\stealthskill, \\ Survival +\survivalskill, Swim \swimskill \\
+\textbf{Languages} \allylanguages \\
+
+\textbf{Hatred (Ex)} Mites receive a +1 bonus on attack rolls against humanoid creatures of the dwarf or gnome subtype due to special training against these hated foes. \\
+
+\textbf{Vermin Empathy (Ex)} This ability functions as a druid’s wild empathy, save that a mite can only use this ability on vermin. A mite gains a +4 racial bonus on this check. Vermin are normally mindless, but this empathic communication imparts on them a modicum of implanted intelligence, allowing mites to train Medium vermin and use them as mounts. Vermin empathy treats swarms as if they were one creature possessing a single mind-a mite can thus use this ability to influence and direct the actions of swarms with relative ease. \\
+
+\newpage
