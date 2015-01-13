@@ -1,0 +1,261 @@
+% --- Ally Info ---
+\def \name{Elemental, Mud (Medium)}
+\def \racialtype{outsider (earth, elemental, extraplanar, water)}
+\def \racialsize{Medium \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{20}
+\def \baseburrowspeed{10}
+\def \baseswimspeed{30}
+
+\def \allyroles{Debuffer, Sensor, Striker}
+
+% Height: 4 ft.
+% Weight: 80 lbs.
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{16}
+\def \basedexterity{10}
+\def \baseconstitution{15}
+\def \baseintelligence{4}
+\def \basewisdom{11}
+\def \basecharisma{11}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{4}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{4}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Outsider ---
+%	d10
+%	Full BAB
+%	Good Reflex and Will saves (usually)
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	Intelligence score of 1 or 2
+
+\def \hitdice{4}
+\def \baseattack{\hitdice}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(\hitdice / 3, 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{6}
+\def \sizeacmodifier{0}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{0}
+\def \sizecmdmodifier{0}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+
+\def \sizeattackmodifier{0}
+\FPeval{\strengthnhalf}{trunc(\strengthmod * 1.5, 0)}
+
+\attack{\slam}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \racespeedjumpmodifier{-4}
+\def \racialswimbonus{8}
+\def \sizeflybonus{0}
+\def \sizestealthbonus{0}
+
+% --- *Outsider ---
+%	6 + [Intelligence Modifier]
+%	Class Skills -
+%		Bluff, Climb*, Craft, Escape Artist*, Knowledge (dungeoneering)*,
+%		Knowledge (planes), Perception, Sense Motive, Stealth
+%
+%	Total Skill Points - 12
+%		* Due to their varied nature, outsiders also receive 4 additional
+%		  class skills determined by the creature's theme.
+
+\def \outsiderclimbranks{2}
+\def \outsiderescapeartistranks{2}
+\def \outsiderknowledgeplanesranks{2}
+\def \outsiderperceptionranks{4}
+\def \outsiderstealthranks{2}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{0}{\outsiderappraiseranks}{0}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\bluffskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{\outsiderclimbranks}{\strengthmod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftalchemyskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftarmorskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbasketsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbooksskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbowsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftcalligraphyskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftcarpentryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftclothskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftclothingskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftglassskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftjewelryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftleatherskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftlocksskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftpaintingsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftpotteryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftsculpturesskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftshipsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftshoesskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftstonemasonryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\crafttrapsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftweaponsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\diplomacyskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\disguiseskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\escapeartistskill}{\outsiderescapeartistranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\flyskill}{0}{\dexteritymod}{0}{0}{0}{0}{\sizeflybonus}{0}
+\skill{\healskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\outsiderperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performactskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performcomedyskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performdanceskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performkeyboardinstrumentskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performoratoryskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performpercussioninstrumentskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performstringinstrumentsskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performwindinstrumentsskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performsingskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\rideskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\sensemotiveskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\stealthskill}{\outsiderstealthranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{\sizestealthbonus}{0}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{\racialswimbonus}{0}{0}{0}{0}
+
+\skill{\jumpskill}{0}{\dexteritymod}{0}{\racespeedjumpmodifier}{0}{0}{0}{0}
+
+% --- Trained Skills
+%\skill{\disabledeviceskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{\acpenalty}
+%\skill{\handleanimalskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgearcanaskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgedungeoneeringskill}{\outsiderknowledgedungeoneeringranks}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgeengineeringskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgegeographyskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgehistoryskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgelocalskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgenatureskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgenobilityskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+\skill{\knowledgeplanesskill}{\outsiderknowledgeplanesranks}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgereligionskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\linguisticsskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\professionarchitectskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbakerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbarristerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbrewerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbutcherskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionclerkskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioncookskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioncourtesanskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiondriverskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionengineerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionfarmerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionfishermanskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiongamblerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiongardenerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionherbalistskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioninnkeeperskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionlibrarianskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmerchantskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmidwifeskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmillerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionminerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionporterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionsailorskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionscribeskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionshepherdskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionstablemasterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionsoldierskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiontannerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiontrapperskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionwoodcutterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\sleightofhandskill}{0}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{\acpenalty}
+%\skill{\spellcraftskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\usemagicdeviceskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+
+
+
+% --- Feats ---
+\def \feats{Cleave, Improved Bull Rush\textsuperscript{B}, Power Attack, \\ Weapon Proficiency (Martial, Natural, Simple)}
+
+
+
+% --- Miscellaneous ---
+\def \initiative{\dexteritymod}
+\def \senses{darkvision 60 ft., tremorsense 30 ft.; Perception +\perceptionskill}
+
+\def \specialattacks{entrap (DC \enhancedstat{16}, 10 minutes, hardness 5, hp 5)}
+
+% --- *Hit Points ---
+\FPeval{\outsiderhitpoints}{trunc(5.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\outsiderhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnminusonenumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+N \racialsize \racialtype \\
+\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
+\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\
+\textbf{Immune} acid, bleed, critical hit, flanking, paralysis, poison, sleep, \\ sneak attack, stun \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft., burow \baseburrowspeed \hspace{1pt} ft., swim \baseswimspeed \hspace{1pt} ft.; earth glide \\
+\textbf{Senses} \senses \\
+\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Melee} slam \enhancedstat{+\slam} \hspace{1pt} (1d6+\enhancedstat{\strengthnhalf} \hspace{1pt} plus entrap) \\
+\textbf{Special Attacks} \specialattacks \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{+\allycmb}; \textbf{CMD} \enhancedstat{\allycmd} \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics \acrobaticsskill \hspace{1pt} (\jumpskill \hspace{1pt} jumping), Appraise \appraiseskill, Bluff +\bluffskill, Climb \enhancedstat{+\climbskill}, \\ Diplomacy +\diplomacyskill, Disguise +\disguiseskill, Escape Artist +\escapeartistskill, Heal +\healskill, Intimidate +\intimidateskill, \\ Knowledge (planes) +\knowledgeplanesskill, Ride \rideskill, Sense Motive +\sensemotiveskill, Stealth +\stealthskill, Survival +\survivalskill, Swim \enhancedstat{+\swimskill} \\
+\textbf{Languages} Terran \\
+
+\textbf{Entrap (Ex)} The creature has an ability tha restricts another creature’s movement, usually with a physical attack such as ice, mud, lava, or webs. The target of an entrap attack must make a Fortitude save or become entangled for the listed duration. If a target is already entangled by this ability, a second entrap attack means the target must make a Fortitude save or become helpless for the listed duration. The save DCs are Constitution- based. A target made helpless by this ability is conscious but can take no physical actions (except attempting to break free) until the entrapping material is removed. The target can use spells with only verbal components or spell-like abilities if it can make a DC 20 concentration check. An entangled creature can make a Strength check (at the same DC as the entrap saving throw DC) as a full- round action to break free; the DC for a helpless creature is +5 greater than the saving throw DC. Destroying the entrapping material frees the creature. \\
+
+The mud from an elemental’s entrap ability can be washed away in 1d3 rounds of immersion in water. \\
+
+\textbf{Earth Glide (Ex)} A burrowing earth elemental can pass through stone, dirt, or almost any other sort of earth except metal as easily as a fish swims through water. If protected against fire damage, it can even glide through lava. Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence. A move earth spell cast on an area containing a burrowing earth elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save. \\

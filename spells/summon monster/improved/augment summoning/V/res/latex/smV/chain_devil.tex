@@ -1,0 +1,283 @@
+% --- Ally Info ---
+\def \name{Chain Devil}
+\def \racialtype{outsider (evil, extraplanar, kyton, lawful)}
+\def \racialsize{Medium \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft. (10 ft. with chains)}
+\def \baselandspeed{30}
+
+\def \allyroles{Debuffer, Striker}
+
+% Height: 4 ft.
+% Weight: 1 lb.
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{15}
+\def \basedexterity{17}
+\def \baseconstitution{14}
+\def \baseintelligence{11}
+\def \basewisdom{12}
+\def \basecharisma{12}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{4}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{4}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Outsider ---
+%	d10
+%	Full BAB
+%	Good Reflex and Will saves (usually)
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	Intelligence score of 1 or 2
+
+\def \hitdice{8}
+\def \baseattack{\hitdice}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(\hitdice / 3, 0)}
+
+
+
+% --- Defense ---
+\def \armoracbonus{4}
+\def \naturalarmorbonus{4}
+\def \sizeacmodifier{0}
+
+\armorclass{\ac}{\armoracbonus}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{\armoracbonus}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{0}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{0}
+\def \sizecmdmodifier{0}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+
+\def \featattackbonus{1}
+\def \sizeattackmodifier{0}
+
+\attack{\chain}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{\featattackbonus}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \featperceptionbonus{2}
+\def \featsensemotivebonus{2}
+\def \racialflybonus{0}
+\def \racialstealthbonus{5}
+\def \sizeflybonus{0}
+\def \sizestealthbonus{0}
+
+% --- *Outsider ---
+%	6 + [Intelligence Modifier]
+%	Class Skills -
+%		Acrobatics*, Bluff, Climb*, Craft, Escape Artist*, Knowledge (planes), 
+%		Intimidate*, Perception, Sense Motive, Stealth,
+%
+%	Total Skill Points - 48
+%		* Due to their varied nature, outsiders also receive 4 additional
+%		  class skills determined by the creature's theme.
+
+\def \outsideracrobaticsranks{8}
+\def \outsiderclimbranks{8}
+\def \outsidercraftblacksmithingranks{8}
+\def \outsiderescapeartistranks{8}
+\def \outsiderintimidateranks{8}
+\def \outsiderperceptionranks{8}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{\outsideracrobaticsranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\appraiseskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+\skill{\bluffskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{\outsiderclimbranks}{\strengthmod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftalchemyskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftarmorskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbasketsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\craftblacksmithingskill}{\outsidercraftblacksmithingranks}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbooksskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbowsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftcalligraphyskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftcarpentryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftclothskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftclothingskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftglassskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftjewelryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftleatherskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftlocksskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftpaintingsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftpotteryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftsculpturesskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftshipsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftshoesskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftstonemasonryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\crafttrapsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftweaponsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\diplomacyskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\disguiseskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\escapeartistskill}{\outsiderescapeartistranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\flyskill}{0}{\dexteritymod}{0}{\racialflybonus}{0}{0}{\sizeflybonus}{0}
+\skill{\healskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{\outsiderintimidateranks}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\outsiderperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{\featperceptionbonus}
+%\skill{\performactskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performcomedyskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performdanceskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performkeyboardinstrumentskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performoratoryskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performpercussioninstrumentskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performstringinstrumentsskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performwindinstrumentsskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performsingskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\rideskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\sensemotiveskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\stealthskill}{0}{\dexteritymod}{0}{0}{0}{0}{\sizestealthbonus}{\featsensemotivebonus}
+\skill{\survivalskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+
+% --- Trained Skills
+%\skill{\disabledeviceskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{\acpenalty}
+%\skill{\handleanimalskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgearcanaskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgedungeoneeringskill}{\outsiderknowledgedungeoneeringranks}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgeengineeringskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgegeographyskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgehistoryskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgelocalskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgenatureskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgenobilityskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgeplanesskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgereligionskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\linguisticsskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\professionarchitectskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbakerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbarristerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbrewerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbutcherskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionclerkskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioncookskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioncourtesanskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiondriverskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionengineerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionfarmerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionfishermanskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiongamblerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiongardenerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionherbalistskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioninnkeeperskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionlibrarianskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmerchantskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmidwifeskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmillerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionminerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionporterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionsailorskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionscribeskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionshepherdskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionstablemasterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionsoldierskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiontannerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiontrapperskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionwoodcutterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\sleightofhandskill}{0}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{\acpenalty}
+%\skill{\spellcraftskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\usemagicdeviceskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+
+
+
+% --- Feats ---
+\def \feats{Alertness, Blind-Fight, Improved Initiative, Weapon Focus (chain), \\ Weapon Proficiency (Martial, Natural, Simple)}
+
+
+
+% --- Miscellaneous ---
+\def \featinitiativebonus{4}
+\FPeval{\initiative}{clip(\dexteritymod + \featinitiativebonus)}
+
+\def \senses{darkvision 60 ft.; Perception +\perceptionskill}
+
+\def \specialattacks{dancing chains, unnerving gaze}
+\def \specialqualities{chain armor}
+
+% --- *Hit Points ---
+\FPeval{\outsiderhitpoints}{trunc(5.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\outsiderhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnnumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+LE \racialsize \racialtype \\
+\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \\ 
+\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt} \\ 
+\textbf{Defensive Abilities} regeneration 2 (good weapons and spells, silver weapons)
+\textbf{DR} 5/silver or good; \textbf{SR} 17 \\
+\textbf{Immune} cold \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft. \\ 
+\textbf{Senses} \senses \\
+\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Space} \racialspace; \textbf{Reach} \racialreach \\
+\textbf{Melee} 4 chains \enhancedstat{+\chain} \hspace{1pt} (2d4+\enhancedstat{\strengthmod}) \\
+\textbf{Special Attacks} \specialattacks \\
+\textbf{Special Qualities} \specialqualities \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{+\allycmb}; \textbf{CMD} \enhancedstat{\allycmd} \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill, Appraise +\appraiseskill, Bluff +\bluffskill, Climb \enhancedstat{+\climbskill}, \\ Craft (blacksmithing) +\craftblacksmithingskill, Diplomacy +\diplomacyskill, Disguise +\disguiseskill, Escape Artist +\escapeartistskill, Heal +\healskill, Intimidate +\intimidateskill, Ride +\rideskill, Sense Motive +\sensemotiveskill, Stealth +\stealthskill, Survival +\survivalskill, Swim \enhancedstat{+\swimskill} \\
+\textbf{Languages} Common, Infernal \\
+
+\textbf{Chain Armor (Ex)} The chains that adorn a kyton grant it a +4 armor bonus, but are not treated as armor for the purpose of arcane spell failure, armor check penalties, maximum Dexterity, weight, or proficiency. \\
+
+\textbf{Dancing Chains (Su)} A kyton can control up to four chains within 20 feet as a standard action, making the chains dance or move as it wishes. In addition, a kyton can increase these chains' length by up to 15 feet and cause them to sprout razor-edged barbs. These chains attack as effectively as the kyton itself. If a chain is in another creature's possession, the creature can attempt a DC 15 Will save to break the kyton's power over that chain. If the save is successful, the kyton cannot attempt to control that particular chain again for 24 hours or until the chain leaves the creature's possession. A kyton can climb chains it controls at its normal speed without making Climb checks. The save DC is Charisma-based. \\
+
+\textbf{Regeneration (Ex)} A creature with this ability is difficult to kill. Creatures with regeneration heal damage at a fixed rate, as with fast healing, but they cannot die as long as their regeneration is still functioning (although creatures with regeneration still fall unconscious when their hit points are below 0). Certain attack forms, typically fire and acid, cause a creature’s regeneration to stop functioning on the round following the attack. During this round, the creature does not heal any damage and can die normally. The creature's descriptive text describes the types of damage that cause the regeneration to cease functioning. \\
+
+Attack forms that don’t deal hit point damage are not healed by regeneration. Regeneration also does not restore hit points lost from starvation, thirst, or suffocation. Regenerating creatures can regrow lost portions of their bodies and can reattach severed limbs or body parts if they are brought together within 1 hour of severing. Severed parts that are not reattached wither and die normally. \\
+
+\textbf{Scent (Ex)} This special quality allows a creature to detect approaching enemies, sniff out hidden foes, and track by sense of smell. Creatures with the scent ability can identify familiar odors just as humans do familiar sights. \\
+
+The creature can detect opponents within 30 feet by sense of smell. If the opponent is upwind, the range increases to 60 feet; if downwind, it drops to 15 feet. Strong scents, such as smoke or rotting garbage, can be detected at twice the ranges noted above. Overpowering scents, such as skunk musk or troglodyte stench, can be detected at triple normal range. \\
+
+When a creature detects a scent, the exact location of the source is not revealed—only its presence somewhere within range. The creature can take a move action to note the direction of the scent. When the creature is within 5 feet of the source, it pinpoints the source's location. \\
+
+A creature with the scent ability can follow tracks by smell, making a Wisdom (or Survival) check to find or follow a track. The typical DC for a fresh trail is 10 (no matter what kind of surface holds the scent). This DC increases or decreases depending on how strong the quarry's odor is, the number of creatures, and the age of the trail. For each hour that the trail is cold, the DC increases by 2. The ability otherwise follows the rules for the Survival skill. Creatures tracking by scent ignore the effects of surface conditions and poor visibility. \\
+
+\textbf{Unnerving Gaze (Su)} Range 30 ft., Will DC 15 negates. A kyton can make its face resemble one of an opponent's departed loved ones or bitter enemies. Those who fail their saves become shaken for 1d3 rounds. This is a mind-affecting fear effect. The save DC is Charisma-based. \\
+
+\newpage

@@ -1,0 +1,277 @@
+% --- Ally Info ---
+\def \name{Archon, Hound}
+\def \racialtype{outsider (archon, extraplanar, good, lawful)}
+\def \racialsize{Medium \hspace{1pt}}
+\def \racialspace{5 ft.}
+\def \racialreach{5 ft.}
+\def \baselandspeed{40}
+
+\def \allyroles{Buffer, Caster, Debuffer, Sensor, Striker, Tank}
+
+% Height: 4 ft.
+% Weight: 1 lb.
+
+
+
+% --- Ability Scores ---
+
+% --- *Base Ability Scores ---
+\def \basestrength{15}
+\def \basedexterity{10}
+\def \baseconstitution{13}
+\def \baseintelligence{10}
+\def \basewisdom{13}
+\def \basecharisma{12}
+
+% --- *Final Ability Scores ---
+\ability{\strength}{\basestrength}{0}{0}{0}{4}{0}
+\ability{\dexterity}{\basedexterity}{0}{0}{0}{0}{0}
+\ability{\constitution}{\baseconstitution}{0}{0}{0}{4}{0}
+\ability{\intelligence}{\baseintelligence}{0}{0}{0}{0}{0}
+\ability{\wisdom}{\basewisdom}{0}{0}{0}{0}{0}
+\ability{\charisma}{\basecharisma}{0}{0}{0}{0}{0}
+
+% --- *Ability Score Modifiers ---
+\abilitymodifier{\strengthmod}{\strength}
+\abilitymodifier{\dexteritymod}{\dexterity}
+\abilitymodifier{\constitutionmod}{\constitution}
+\abilitymodifier{\intelligencemod}{\intelligence}
+\abilitymodifier{\wisdommod}{\wisdom}
+\abilitymodifier{\charismamod}{\charisma}
+
+
+
+% --- Class ---
+
+% --- *Outsider ---
+%	d10
+%	Full BAB
+%	Good Reflex and Will saves (usually)
+%	Armor Proficiency None*
+%		* Unless trained for war
+%	Weapon Proficiency Natural*
+%		* An animal is proficient only with its own natural weapons.
+%		- Non-combative herbivorse treat their natural weapons as secondary attacks.
+%	Always neutral.
+%	Intelligence score of 1 or 2
+
+\def \hitdice{6}
+\def \baseattack{\hitdice}
+
+\FPeval{\basefortitude}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basereflex}{trunc(2 + (\hitdice / 2), 0)}
+\FPeval{\basewill}{trunc(\hitdice / 3, 0)}
+
+
+
+% --- Defense ---
+\def \naturalarmorbonus{9}
+\def \sizeacmodifier{0}
+
+\armorclass{\ac}{0}{0}{\naturalarmorbonus}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\touchac}{0}{0}{0}{\dexteritymod}{\sizeacmodifier}{0}
+\armorclass{\flatfootedac}{0}{0}{\naturalarmorbonus}{0}{\sizeacmodifier}{0}
+
+\def \featwillbonus{2}
+
+\savingthrow{\fortitude}{\basefortitude}{\constitutionmod}{0}{0}{0}
+\savingthrow{\reflex}{\basereflex}{\dexteritymod}{0}{0}{0}
+\savingthrow{\will}{\basewill}{\wisdommod}{0}{0}{\featwillbonus}
+
+
+
+% --- Offense ---
+\def \sizecmbmodifier{0}
+\def \sizecmdmodifier{0}
+
+\combatmaneuverbonus{\allycmb}{\baseattack}{\strengthmod}{\sizecmbmodifier}
+\combatmaneuverdefense{\allycmd}{\baseattack}{\strengthmod}{\dexteritymod}{\sizecmdmodifier}
+
+\def \masterworkbonus{1}
+\def \sizeattackmodifier{0}
+\FPeval{\strengthhalf}{trunc(\strengthmod * 0.5, 0)}
+\FPeval{\strengthnhalf}{trunc(\strengthmod * 1.5, 0)}
+
+\attack{\bite}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+\attack{\bitesecondary}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{-5}
+\attack{\greatsword}{\baseattack}{\strengthmod}{\masterworkbonus}{\sizeattackmodifier}{0}
+\attack{\greatsworditer}{\baseattack}{\strengthmod}{\masterworkbonus}{\sizeattackmodifier}{-5}
+\attack{\slam}{\baseattack}{\strengthmod}{0}{\sizeattackmodifier}{0}
+
+
+
+% --- Skills ---
+\def \classskillbonus{3}
+\def \racialspeedjumpbonus{4}
+\def \racialstealthbonus{4}
+\def \racialsurvivalbonus{4}
+\def \sizeflybonus{0}
+\def \sizestealthbonus{0}
+
+% --- *Outsider ---
+%	6 + [Intelligence Modifier]
+%	Class Skills -
+%		Acrobatics*, Bluff, Craft, Intimidate*, Knowledge (planes), 
+%		Perception, Sense Motive, Stealth, Survival*
+%
+%	Total Skill Points - 36
+%		* Due to their varied nature, outsiders also receive 4 additional
+%		  class skills determined by the creature's theme.
+
+\def \outsideracrobaticsranks{6}
+\def \outsiderintimidateranks{6}
+\def \outsiderperceptionranks{6}
+\def \outsidersensemotiveranks{6}
+\def \outsiderstealthranks{6}
+\def \outsidersurvivalranks{6}
+
+% --- Untrained Skills ---
+\skill{\acrobaticsskill}{\outsideracrobaticsranks}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\appraiseskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+\skill{\bluffskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\climbskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+%\skill{\craftalchemyskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftarmorskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbasketsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbooksskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftbowsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftcalligraphyskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftcarpentryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftclothskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftclothingskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftglassskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftjewelryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftleatherskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftlocksskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftpaintingsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftpotteryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftsculpturesskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftshipsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftshoesskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftstonemasonryskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\crafttrapsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\craftweaponsskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\diplomacyskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\disguiseskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\escapeartistskill}{0}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\flyskill}{0}{\dexteritymod}{0}{0}{0}{0}{\sizeflybonus}{0}
+\skill{\healskill}{0}{\wisdommod}{0}{0}{0}{0}{0}{0}
+\skill{\intimidateskill}{\outsiderintimidateranks}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\perceptionskill}{\outsiderperceptionranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performactskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performcomedyskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performdanceskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performkeyboardinstrumentskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performoratoryskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performpercussioninstrumentskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performstringinstrumentsskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performwindinstrumentsskill}{0}{\charismamod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\performsingskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+\skill{\rideskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{0}
+\skill{\sensemotiveskill}{\outsidersensemotiveranks}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+\skill{\stealthskill}{\outsiderstealthranks}{\dexteritymod}{\classskillbonus}{0}{\racialstealthbonus}{0}{\sizestealthbonus}{0}
+\skill{\survivalskill}{\outsidersurvivalranks}{\wisdommod}{\classskillbonus}{0}{\racialsurvivalbonus}{0}{0}{0}
+\skill{\swimskill}{0}{\strengthmod}{0}{0}{0}{0}{0}{0}
+
+\skill{\jumpskill}{\outsideracrobaticsranks}{\dexteritymod}{\classskillbonus}{\racialspeedjumpbonus}{0}{0}{0}{0}
+
+% --- Trained Skills
+%\skill{\disabledeviceskill}{0}{\dexteritymod}{0}{0}{0}{0}{0}{\acpenalty}
+%\skill{\handleanimalskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgearcanaskill}{0}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgedungeoneeringskill}{\outsiderknowledgedungeoneeringranks}{\intelligencemod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\knowledgeengineeringskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgegeographyskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgehistoryskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgelocalskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgenatureskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgenobilityskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgeplanesskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\knowledgereligionskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\linguisticsskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\professionarchitectskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbakerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbarristerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbrewerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionbutcherskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionclerkskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioncookskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioncourtesanskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiondriverskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionengineerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionfarmerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionfishermanskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiongamblerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiongardenerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionherbalistskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professioninnkeeperskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionlibrarianskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmerchantskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmidwifeskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionmillerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionminerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionporterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionsailorskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionscribeskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionshepherdskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionstablemasterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionsoldierskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiontannerskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professiontrapperskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\professionwoodcutterskill}{0}{\wisdommod}{\classskillbonus}{0}{0}{0}{0}{0}
+%\skill{\sleightofhandskill}{0}{\dexteritymod}{\classskillbonus}{0}{0}{0}{0}{\acpenalty}
+%\skill{\spellcraftskill}{0}{\intelligencemod}{0}{0}{0}{0}{0}{0}
+%\skill{\usemagicdeviceskill}{0}{\charismamod}{0}{0}{0}{0}{0}{0}
+
+
+
+% --- Feats ---
+\def \feats{Improved Initiative, Iron Will, Power Attack, \\ Weapon Proficiency (Martial, Natural, Simple)}
+
+
+
+% --- Miscellaneous ---
+\def \featinitiativebonus{4}
+\FPeval{\initiative}{clip(\dexteritymod + \featinitiativebonus)}
+
+\def \senses{darkvision 60 ft., \textit{detect evil}, low-light vision, scent; Perception +\perceptionskill}
+
+\def \specialattacks{}
+\def \specialqualities{change shape (\textit{beast shape II})}
+
+% --- *Hit Points ---
+\FPeval{\outsiderhitpoints}{trunc(5.5 * \hitdice, 0)}
+\FPeval{\bonushitpoints}{clip(\hitdice * \constitutionmod)}
+
+\FPeval{\hitpoints}{clip(\outsiderhitpoints + \bonushitpoints)}
+
+
+
+% --- PDF Output ---
+\line(1,0){345} \\
+\levelnminusonenumsummons \hspace{1pt} \textbf{\textit{\name:}} \allyroles \\
+
+LG \racialsize \racialtype \\
+\textbf{hp} \enhancedstat{\hitpoints} \hspace{1pt} (HD \hitdice); \textbf{AC} \ac, touch \touchac, flat-footed \flatfootedac \hspace{1pt}; +2 deflection vs. evil \\ 
+\textbf{Fort} \enhancedstat{+\fortitude} \hspace{1pt} \textbf{Ref} +\reflex \hspace{1pt} \textbf{Will} +\will \hspace{1pt}; +4 vs. posion, +2 resistance vs. evil \\
+\textbf{DR} 10/evil; \textbf{SR} 15 \\ 
+\textbf{Immune} electricity, petrification \\
+\textbf{Aura} aura of menace (DC 16), \textit{magic circle against evil} \\
+\textbf{Init} +\initiative; \textbf{Speed} \baselandspeed \hspace{1pt} ft. \\ 
+\textbf{Senses} \senses \\
+\textbf{Str} \enhancedstat{\strength} \hspace{1pt} \textbf{Dex} \dexterity \hspace{1pt} \textbf{Con} \enhancedstat{\constitution} \hspace{1pt} \textbf{Int} \intelligence \hspace{1pt} \textbf{Wis} \wisdom \hspace{1pt} \textbf{Cha} \charisma \hspace{1pt} \\
+\textbf{Melee} bite \enhancedstat{+\bite} \hspace{1pt} (1d8+\enhancedstat{\strengthnhalf}), slam \enhancedstat{+\slam} \hspace{1pt} (1d4+\enhancedstat{\strengthhalf}) or \\ \textit{mwk greatsword} \enhancedstat{+\greatsword}/\enhancedstat{+\greatsworditer} \hspace{1pt} (2d6+\enhancedstat{\strengthnhalf}), bite \enhancedstat{+\bitesecondary} \hspace{1pt} (1d8+\enhancedstat{\strengthmod}) \\
+\textbf{Special Qualities} \specialqualities \\
+\textbf{Spell-Like Abilities} (CL 6th) \\
+Constant---\textit{detect evil, magic circle against evil} \\
+At Will---\textit{aid, continual flame,} \sout{\textit{greater teleport} (self plus lbs. of objects only)}\textit{, message} \\
+\textbf{Base Attack} +\baseattack; \textbf{CMB} \enhancedstat{+\allycmb}; \textbf{CMD} \enhancedstat{\allycmd} \\ 
+\textbf{Feats} \feats \\
+\textbf{Skills} Acrobatics +\acrobaticsskill \hspace{1pt} (+\jumpskill \hspace{1pt} jumping), Appraise \appraiseskill, Bluff +\bluffskill, Climb +\enhancedstat{\climbskill}, \\ Diplomacy +\diplomacyskill, Disguise +\disguiseskill, Escape Artist +\escapeartistskill, Heal +\healskill, Intimidate +\intimidateskill, \\ Ride +\rideskill, Sense Motive +\sensemotiveskill, Stealth +\stealthskill, Survival +\survivalskill, Swim \enhancedstat{+\swimskill} \\
+\textbf{Languages} Celestial, Draconic, Infernal; truespeech \\
+
+\textbf{Aura of Menace (Su)} Any hostile creature within a 20-foot radius of an archon must succeed on a Will save (DC 13) to resist its effects. The save DC is Charisma-based, and includes a +2 racial bonus. Those who fail take a -2 penalty on attacks, AC, and saves for 24 hours or until they successfully hit the archon that generated the aura. A creature that has resisted or broken the effect cannot be affected again by the same archon's aura for 24 hours. \\
+
+\textbf{Change Shape (Su)} A hound archon can assume any canine form of Small to Large size, as if using beast shape II. While in canine form, the hound archon loses its bite, slam, and greatsword attacks, but gains the bite attack of the form it chooses. For the purposes of this ability, canines include any dog-like or wolf-like creature of the animal type. \\
+
+\textbf{Truespeech (Su)} All archons can speak with any creature that has a language, as though using a tongues spell (caster level 14th). This ability is always active. \\
