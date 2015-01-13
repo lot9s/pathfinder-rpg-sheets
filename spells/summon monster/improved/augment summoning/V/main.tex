@@ -2,7 +2,7 @@
 
 \usepackage{changepage}
 \usepackage{framed}
-\usepackage{graphicx}
+\usepackage{eso-pic, graphicx}
 \usepackage[colorlinks]{hyperref}
 \usepackage{multicol}
 \usepackage{ulem}
@@ -16,6 +16,9 @@
 
 % Document
 \begin{document}
+
+\AddToShipoutPictureBG{\includegraphics[width=\paperwidth,height=\paperheight]{res/img/paper.jpg}}
+\clearpage
 
 \input{summon_monster_V}
 
